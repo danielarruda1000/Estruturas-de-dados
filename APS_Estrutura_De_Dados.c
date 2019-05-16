@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 /* 
 	Faça um programa em C que crie uma árvore binária e implemente uma função
 	que retorne a quantidade de folhas de uma árvore binária.
@@ -8,6 +5,9 @@
 	Essa função deve obedecer ao protótipo:
 	int folhas (Arv* a); 
 */
+
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct noArv{
 	int valor;
@@ -36,29 +36,22 @@ noArv* cria_arvore(int valor, noArv* esquerda, noArv* direita){
 }
 
 //Contador de folhas (nós que não possuem filhos)
-int auxCont;
-void Percorre(noArv* noAux){
-
-	//Imprimindo Nós
-	printf("%d ", noAux->valor);
-
-	if (noAux->esq == NULL && noAux->dir == NULL)
-		auxCont++;
-
-	if (noAux->esq != NULL)
-		Percorre(noAux->esq);
-
-	if (noAux->dir != NULL)
-		Percorre(noAux->dir);
-
-}
+int qtdFolhas = 0;
 
 int folhas(noArv* noAux){
-	auxCont = 0;
-	Percorre(noAux);
-	return auxCont;
+
+	if (noAux->esq == NULL && noAux->dir == NULL){
+		printf("%d ", noAux->valor);
+		qtdFolhas++;
+	}
+	if (noAux->esq != NULL)
+		folhas(noAux->esq);
+
+	if (noAux->dir != NULL)
+		folhas(noAux->dir);
+		
+	return qtdFolhas;
 }
-//Fim do Contador
 
 int main() {
 
@@ -86,6 +79,7 @@ int main() {
 	noArv* B = cria_arvore(20, D, E);
 	noArv* A = cria_arvore(50, B, C); //Raíz
 	
+	printf("Folhas:\t");
 	printf("\nQuantidade de Folhas = %d\n", folhas(A));	
 
 	return 0;
